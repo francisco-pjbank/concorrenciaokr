@@ -1,0 +1,5 @@
+plac
+bs4
+aiohttp
+aiofiles
+requests

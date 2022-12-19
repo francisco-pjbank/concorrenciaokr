@@ -16,8 +16,8 @@ A concorrência tem apenas uma pessoa na cozinha:
   * Termine de cortar as cebolas
   
 Nesse caso, fica claro que não se pode fazer várias coisas AO MESMO TEMPO.
-Podemos iniciar as tarefas simultaneamente, mas a cada instante é escolhiada 
-apenas uma para ser executada.
+Há várias tarefas ocorrento simultaneamente, mas a cada instante o cozinheiro
+está dando atenção a apenas uma delas.
 
 O paralelismo tem várias pessoas na cozinha:
 
@@ -25,7 +25,26 @@ O paralelismo tem várias pessoas na cozinha:
   * Pessoa 2 está cortando pimentas vermelhas
   * A pessoa 3 espera que a panela aqueça
 
-Neste caso, várias tarefas estão sendo executadas ao mesmo tempo.
+Neste caso, várias tarefas estão sendo executadas ao mesmo tempo e cada pessoa
+cuida de uma delas de forma independente.
+
+Ao pensar sobre concorrência ou paralelismo, às vezes é importante entender qual
+tipo de problema está sendo resolvido que em geral pode ser separado em uma de 
+2 classes a seguir:
+
+  * **Paralelismo de dados**: um exemplo típico seria a soma dos elementos de 
+                              uma linha de uma matriz. A soma de cada linha é 
+                              independente das outras linhas e pode ser 
+                              realizada por um processo independente.
+
+  * **Paralelismo de tarefas**: por exemplo uma tarefa seria calcular o valor
+                               médio dos elementos da matriz e a outra tarefa
+                               a variância.
+
+É importante ressaltar que em toda programação concorrente os dados/tarefas são
+distribuídos para computação e em algum momento no futuro deverá ocorrer a 
+coleta dos resultados dessa operação. Essa idéia de distribuir e agregar acabou 
+gerando um modelo de programação conhecido por Map/Reduce em BigData.
 
 ## Sistema operacional
 
@@ -43,15 +62,14 @@ serem executados de forma "quasi-paralela".
 Um processo é a abstração que o sistema operacional usa para executar o código. 
 O código da aplicação é alocado a um processo ao qual são atribuídos memória e 
 outros recursos compartilhados. A abstração do processo permite que o sistema 
-operacional “distinga” entre os programas em execução, para que eles criem 
+operacional “distinga” entre os programas em execução, para que eles não criem 
 conflitos entre si. Por exemplo, o Processo 1 não pode acessar a memória 
-reservada pelo Processo 2. Também é importante em termos de segurança dos 
-usuários.
+reservada pelo Processo 2. 
 
 # Implementado a concorrência
 
 Como a concorrência (ou mesmo o paralelismo) é realmente alcançada nos sistemas
-operacionais modernos? Do ponto de vista como desenvolvedor, através dos 
+operacionais modernos? Do ponto de vista do desenvolvedor, através dos 
 seguintes mecanismos: 
 
   * assíncronismo.
@@ -75,7 +93,7 @@ Em geral, operações 'CPU bounded' são melhor executadas com multiprocessament
 já 'IO bounded' com threads ou assíncronismo.
 
 
-![image0001](image0001.png)
+![image0001](figuras/image0001.png)
 
 
 ## Multithreading
@@ -91,8 +109,8 @@ forma 'independente' e o resultado combinado no futuro.
 
 ### Compatilhamento de recursos
 
-As threads existem dentro de um mesmo processo criado por uma aplicação . Isso 
-significa que elas compartilham todos os mesmos dados do processo. Elas podem 
+As threads existem dentro de um mesmo processo criado por uma aplicação. Isso 
+significa que elas compartilham os mesmos dados do processo. Elas podem 
 ler e modificar variáveis ​​locais e acessar a mesma memória ou os mesmos recursos
 (arquivos, soquetes de rede, etc).
 
@@ -106,8 +124,8 @@ O gerenciador de memória Python não é thread-safe. Como resultado, multiplas
 threads podem atualizar o mesmo objeto na memória. Isso pode acabar corrompendo
 o estado dos objetos em um aplicativo.
 
-os dados devem ser protegidos usando mecanismos de bloqueio para que várias 
-threads não possam corromper a memória. Para resolver esse problema, o 
+Os dados devem ser protegidos usando mecanismos de bloqueio para que as várias 
+threads em execução não corrompam a memória. Para resolver esse problema, o 
 interpretador Python usa um bloqueio, conhecido como Global Interpreter Lock 
 (GIL). Cada processo em python possui seu próprio GIL. O GIL garante que apenas 
 uma thread possa executar o interpretador em uma determinada instância de tempo.
@@ -118,7 +136,7 @@ bloqueio para a thread para que ela possa ser executada.
 O GIL não exlui o uso de mecanismos de sincronização, uma vez que ele só 
 funciona para objetos internos do python, o que exclui variáveis de aplicação.
 
-![image0002](image0002.png)
+![image0002](figuras/image0002.png)
 
 
 ## Assíncronismo
@@ -145,7 +163,7 @@ Por outro lado, requer a adoção de um **"tipo de paradigma" de programação**
 específico.
 
 
-![image0003](image0003.png)
+![image0003](figuras/image0003.png)
 
 
 ## Multiprocessmento
@@ -160,7 +178,7 @@ elaboração do código que os processos irão utilizar.
 Além disso, os processos não compartilham o contexto de memória e, portanto, 
 não é mais fácil corromper os objetos de memória.
 
-![image0004](image0004.png)
+![image0004](figuras/image0004.png)
 
 Há 3 formas de se criar processos:
 
@@ -193,6 +211,6 @@ compartilhada. Os nós consumidores ou workers removerão as tarefas da fila e
 a executarão.
 
 
-![image0005](image0005.png)
+![image0005](figuras/image0005.png)
 
 

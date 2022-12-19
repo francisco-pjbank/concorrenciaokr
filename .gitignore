@@ -1,0 +1,7 @@
+__pycache__
+.idea/
+.vscode/
+.coverage
+__pychache/
+*__pycache__/
+coverage.xml

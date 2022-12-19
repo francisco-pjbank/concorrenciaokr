@@ -6,10 +6,11 @@ from bs4 import BeautifulSoup
 import concurrent.futures
 
 from download import Download, DownloadAsync
+#!/usr/bin/python3
 from itertools import chain
 import logging
 
-from multiprocessing import Process, JoinableQueue
+from multiprocessing import JoinableQueue
 
 from os import makedirs
 
@@ -21,6 +22,8 @@ import requests
 import runtask
 
 import threading
+
+from time import time
 
 
 DOWNLOAD_PATH = '/tmp/downloaded'
@@ -95,7 +98,7 @@ def async_coro(resp):
         d = DownloadAsync(r,DOWNLOAD_PATH)
         coros=chain(coros,[d()])
         
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
     loop.run_until_complete(run_async_tasks(coros))
     loop.close()    
     
@@ -192,6 +195,7 @@ def main(asynciter=False, queueasync=False, proc=False,thred=False,fut=False):
 
     makedirs(DOWNLOAD_PATH, exist_ok=True)
 
+    start = time()
     if asynciter:
         async_coro(resp)
         
@@ -206,6 +210,8 @@ def main(asynciter=False, queueasync=False, proc=False,thred=False,fut=False):
     
     elif fut:
         fut_task(resp)
+    
+    print("Tempo execucao ...", time()-start)
 
               
         

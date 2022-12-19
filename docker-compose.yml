@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        container_name: pythonapp
+        image: pythonapp
+        tty: true
+        stdin_open: true                
+
+        
