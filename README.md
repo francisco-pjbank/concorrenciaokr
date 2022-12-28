@@ -143,22 +143,22 @@ funciona para objetos internos do python, o que exclui variáveis de aplicação
 
 O Python oferece recursos de assincronismo ou cooperação permitindo executar
 outras ações enquanto uma tarefa está em um estado de espera de E/S. A 
-biblioteca *asyncio* permite que os codificadores Python escrevam código 
-simultâneo usando a sintaxe *async/await* enquanto têm controle total sobre a 
+biblioteca *asyncio* permite que os desenvolvedores Python escrevam código 
+concorrente usando a sintaxe *async/await* enquanto têm controle total sobre a 
 execução das corrotinas simultâneas. Cabe ressaltar que há outros 'frameworks'
 além do *asyncio*.
 
-A base do Async IO está no objeto de loop de eventos. Podemos pensar no loop de 
+A base do Async IO está no loop de eventos. Podemos pensar no loop de 
 eventos como uma pilha de funções. O loop de eventos é essencialmente o núcleo 
 de toda operação assíncrona. Ele mantém as funções que serão executadas e 
-garante que as funções não se bloqueiem.
+garante que as funções não sejam bloqueiadas.
 
 A diretiva *async* indica que uma ação será completada no futuro e a diretiva 
 *await* aguarda o resultado de uma ação.
 
 Assíncronismo, em geral, é preferível ao uso de threads e é melhor empregado em 
 operações 'IO bounded'. Todas as operações realizadas no modo *async* ocorrem
-na 'Main Thread' e portanto não existe preocupação compartilhamento de recursos.
+na 'Main Thread' e portanto não existe preocupação com compartilhamento de recursos.
 Por outro lado, requer a adoção de um **"tipo de paradigma" de programação** 
 específico.
 
@@ -176,7 +176,7 @@ Portanto, nada impede que o paradigma de programação assíncrona seja usada na
 elaboração do código que os processos irão utilizar.
 
 Além disso, os processos não compartilham o contexto de memória e, portanto, 
-não é mais fácil corromper os objetos de memória.
+não é mais difícil corromper os objetos de memória.
 
 ![image0004](figuras/image0004.png)
 
@@ -204,7 +204,7 @@ Problemas de sincronização podem ser resolvidos apenas mudando o paradigma.
 *A melhor maneira de evitar problemas de sincronização é evitar completamente a 
 sincronização.*
 
-Isso é obtido usando o padrão Produtor-Consumidor. As unidades produtoras, 
+Isso é obtido usando por exemplo o padrão Produtor-Consumidor. As unidades produtoras, 
 em geral a aplicação ou alguns de seus nós concorrentes, criam 
 “tarefas pendentes” para executar e, em seguida, as colocam em uma fila 
 compartilhada. Os nós consumidores ou workers removerão as tarefas da fila e 
